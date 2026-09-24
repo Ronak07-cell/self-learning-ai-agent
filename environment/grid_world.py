@@ -2,18 +2,28 @@ import numpy as np
 
 
 class GridWorld:
-    def __init__(self):
-        self.grid = [
-            ['S', '.', '.', '.'],
-            ['.', '#', '.', '.'],
-            ['.', '#', '.', '.'],
-            ['.', '.', '.', 'G']
-        ]
+    def __init__(self, grid=None):
+        if grid is None:
+            grid = [
+                ['S', '.', '.', '.'],
+                ['.', '#', '.', '.'],
+                ['.', '#', '.', '.'],
+                ['.', '.', '.', 'G']
+            ]
+
+        self.grid = grid
         self.rows = len(self.grid)
         self.cols = len(self.grid[0])
-        self.start_pos = (0, 0)
-        self.goal_pos = (3, 3)
+        self.start_pos = self._find_char('S')
+        self.goal_pos = self._find_char('G')
         self.agent_pos = self.start_pos
+
+    def _find_char(self, char):
+        for r in range(self.rows):
+            for c in range(self.cols):
+                if self.grid[r][c] == char:
+                    return (r, c)
+        return None
 
     def reset(self):
         self.agent_pos = self.start_pos
