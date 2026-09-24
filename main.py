@@ -1,5 +1,7 @@
 from environment.grid_world import GridWorld
 from agent.q_learning_agent import QLearningAgent
+from visualize import plot_learning_curve, plot_maze_with_path
+
 
 
 BIG_MAZE = [
@@ -64,6 +66,8 @@ def demonstrate(agent, env):
     print(f"Path taken ({len(path) - 1} steps): {path}")
     print("Reached goal!" if done else "Did not reach goal.")
 
+    return path
+
 
 if __name__ == "__main__":
     trained_agent, env, history = train(episodes=2000, grid=BIG_MAZE)
@@ -72,4 +76,7 @@ if __name__ == "__main__":
     print(f"First episode took {history[0]} steps")
     print(f"Last episode took {history[-1]} steps")
 
-    demonstrate(trained_agent, env)
+    final_path = demonstrate(trained_agent, env)
+
+    plot_learning_curve(history)
+    plot_maze_with_path(env.grid, final_path)
