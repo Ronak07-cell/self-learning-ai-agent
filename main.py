@@ -32,9 +32,32 @@ def train(episodes=500):
     return agent, env, steps_per_episode
 
 
+def demonstrate(agent, env):
+    state = env.reset()
+    done = False
+    path = [state]
+
+    original_exploration = agent.exploration_rate
+    agent.exploration_rate = 0
+
+    while not done and len(path) < 50:
+        action = agent.choose_action(state)
+        next_state, reward, done = env.step(action)
+        path.append(next_state)
+        state = next_state
+
+    agent.exploration_rate = original_exploration
+
+    print("\n--- DEMONSTRATION (pure learned behavior, no randomness) ---")
+    print(f"Path taken ({len(path) - 1} steps): {path}")
+    print("Reached goal!" if done else "Did not reach goal.")
+
+
 if __name__ == "__main__":
     trained_agent, env, history = train(episodes=500)
 
     print("\n--- TRAINING COMPLETE ---")
     print(f"First episode took {history[0]} steps")
     print(f"Last episode took {history[-1]} steps")
+
+    demonstrate(trained_agent, env)
