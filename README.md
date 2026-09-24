@@ -14,6 +14,15 @@ A reinforcement learning agent that learns to navigate a grid maze entirely thro
 - Episode 500: 6 steps (optimal path)
 - Final demonstration run reliably finds the shortest valid path around all walls
 
+## Visualizations
+
+Running `main.py` generates two images:
+- `learning_curve.png` — steps-to-goal per episode, showing the agent's improvement from ~300 steps down to a stable 20-step optimal path
+- `maze_path.png` — the maze layout with the agent's final learned path drawn on top
+
+![Learning Curve](learning_curve.png)
+![Maze Path](maze_path.png)
+
 ## Setup
 
 \`\`\`bash
